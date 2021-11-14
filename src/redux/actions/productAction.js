@@ -1,18 +1,22 @@
+import FakeApiStore from '../../apis/FakeApiStore'
 import { ActionTypes } from "../contants/action-types";
 
-export const setProducts = (products) => {
-  return {
-    type: ActionTypes.SET_PRODUCTS,
-    payload: products,
-  };
-}
+export const fetchProducts = () => async (dispatch) => {
+    const responce = await FakeApiStore.get("/products");
+    dispatch({
+      type: ActionTypes.FETCH_PRODUCTS,
+      payload: responce.data,
+    });
+  }
 
-export const selectedProduct = (product) => {
-  return {
+export const fetchProduct = (id) => async (dispatch) => {
+  const responce = await FakeApiStore.get(`/products/${id}`);
+  dispatch({
     type: ActionTypes.SELECTED_PRODUCT,
-    payload: product,
-  };
+    payload: responce.data,
+  });
 };
+
 
 export const removeSelectedProduct = () => {
   return {

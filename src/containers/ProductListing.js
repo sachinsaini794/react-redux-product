@@ -1,25 +1,17 @@
 import React, {useEffect} from 'react'
-import axios from 'axios'
-import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../redux/actions/productAction";
+import { useDispatch } from "react-redux";
+import { fetchProducts } from "../redux/actions/productAction";
 import ProductComponent from './ProductComponent'
 
 const ProductListing = () => {
 
-  const products = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const fetchAllProducts = async () => {
-    const responce = await axios.get("https://fakestoreapi.com/products").catch((err)=> {
-      console.log("Err", err)
-    })
-
-    dispatch(setProducts(responce.data));
-  }
-
   useEffect(() => {
-    fetchAllProducts()
-  }, []);
+    dispatch(fetchProducts());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   // console.log("Products: ", products);
 
